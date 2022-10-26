@@ -3,8 +3,15 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.InlineQuery;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.InlineQueryResultArticle;
+import com.pengrad.telegrambot.model.request.InputMessageContent;
+import com.pengrad.telegrambot.model.request.InputTextMessageContent;
+import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.AnswerInlineQuery;
 import com.pengrad.telegrambot.request.BaseRequest;
+import com.pengrad.telegrambot.response.BaseResponse;
+import org.jetbrains.annotations.NotNull;
+
+// TODO: Write readme.md
 
 public class Bot {
     private final TelegramBot bot = new TelegramBot(System.getenv("BOT_TOKEN"));
@@ -16,31 +23,26 @@ public class Bot {
      *
      * @param update received update
      */
-    private void process(Update update) {
-        InlineQuery query = update.inlineQuery();
-        BaseRequest request = null;
-        if (query != null) {
-            String queryText = query.query();
-            String parsedText = Parser.parseString(queryText);
-
-            InlineQueryResultArticle article = buildInlineButton("rendered", "Rendered: " + parsedText, parsedText);
-            request = new AnswerInlineQuery(query.id(), article).cacheTime(1);
-        }
-        if (request != null) {
-            bot.execute(request);
+    private void process(@NotNull Update update) {
+        if (update.inlineQuery() != null) {
+            processInlineQuery(update.inlineQuery());
         }
     }
 
     /**
-     * Method to create Article button for inline query
+     * Method to process given inline query
      *
-     * @param id    button ID
-     * @param title button visible title
-     * @param data  button text content
-     * @return query result article
+     * @param query given query
      */
-    private InlineQueryResultArticle buildInlineButton(String id, String title, String data) {
-        return new InlineQueryResultArticle(id, title, data);
+    private void processInlineQuery(@NotNull InlineQuery query) {
+        String queryText = query.query();
+        String parsedText = Parser.parseString(queryText);
+        InputMessageContent content = new InputTextMessageContent(parsedText).parseMode(ParseMode.HTML);
+
+        InlineQueryResultArticle article = new InlineQueryResultArticle("rendered", "Render", content);
+        BaseRequest<AnswerInlineQuery, BaseResponse> request = new AnswerInlineQuery(query.id(), article).cacheTime(1);
+
+        bot.execute(request);
     }
 
     /**

@@ -10,18 +10,18 @@ public class Parser {
         FOR_ALL("Universal quantifier", "\\forall", "&#8704;", "∀"),
         EXISTS("Particular (existence) quantifier", "\\exists", "&#8707;", "∃"),
         BELONGS("Element belong to set", "\\in", "&#8712;", "∈"),
-        NOT_BELONGS("Element does not belong to set", "\\nin", "&#8713;", "∉"),
+        NOT_BELONGS("Element does not belong to set", "\\notin", "&#8713;", "∉"),
         SUM("Sum", "\\sum", "&#8721;", "∑"),
         INFINITY("Infinity", "\\infty", "&#8734;", "∞"),
-        AND("Logical AND", "\\and", "&#8743;", "∧"),
-        OR("Logical OR", "\\or", "&#8744;", "∨"),
+        AND("Logical AND", "\\land", "&#8743;", "∧"),
+        OR("Logical OR", "\\lor", "&#8744;", "∨"),
         INTERSECTION("Sets intersection", "\\cap", "&#8745;", "∩"),
         UNION("Sets union", "\\cup", "&#8746;", "∪"),
-        EPSILON("Epsilon", "\\eps", "&#603;", "ε"),
+        EPSILON("Epsilon", "\\varepsilon", "&#603;", "ε"),
         DELTA("Delta", "\\delta", "&#948;", "δ"),
         LESS("Less", "<", "&#60;", "<"),
-        LESS_EQUAL("Less or equal", "\\le", "&#8804;", "≤"),
-        GREATER_EQUAL("Greater or equal", "\\ge", "&#8805;", "≥"),
+        LESS_EQUAL("Less or equal", "\\leq", "&#8804;", "≤"),
+        GREATER_EQUAL("Greater or equal", "\\geq", "&#8805;", "≥"),
         EQUIVALENCE("Equivalence", "\\equiv", "&#8801;", "≡");
 
         /**
@@ -50,11 +50,10 @@ public class Parser {
      * @return parsed string
      */
 
-    // TODO: Optimize parsing process
-    // TODO: Set ParseMode for inline queries
+    // TODO: Optimize parsing process (for example, via Trie and Aho-Corasick)
     public static String parseString(String string) {
         for (Symbol symbol : Symbol.values()) {
-            string = string.replace(symbol.alias, symbol.character);
+            string = string.replace(symbol.alias, symbol.html);
         }
         return string;
     }
