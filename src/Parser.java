@@ -7,38 +7,43 @@ public class Parser {
          * List of available symbols to parse
          */
         // TODO: Extend list of symbols
-        FOR_ALL("Universal quantifier", "\\forall", "&#8704;", "∀"),
-        EXISTS("Particular (existence) quantifier", "\\exists", "&#8707;", "∃"),
-        BELONGS("Element belong to set", "\\in", "&#8712;", "∈"),
-        NOT_BELONGS("Element does not belong to set", "\\notin", "&#8713;", "∉"),
-        SUM("Sum", "\\sum", "&#8721;", "∑"),
-        INFINITY("Infinity", "\\infty", "&#8734;", "∞"),
-        AND("Logical AND", "\\land", "&#8743;", "∧"),
-        OR("Logical OR", "\\lor", "&#8744;", "∨"),
-        INTERSECTION("Sets intersection", "\\cap", "&#8745;", "∩"),
-        UNION("Sets union", "\\cup", "&#8746;", "∪"),
-        EPSILON("Epsilon", "\\varepsilon", "&#603;", "ε"),
-        DELTA("Delta", "\\delta", "&#948;", "δ"),
-        LESS("Less", "<", "&#60;", "<"),
-        LESS_EQUAL("Less or equal", "\\leq", "&#8804;", "≤"),
-        GREATER_EQUAL("Greater or equal", "\\geq", "&#8805;", "≥"),
-        EQUIVALENCE("Equivalence", "\\equiv", "&#8801;", "≡");
+        FOR_ALL("Universal quantifier", "\\forall", "∀"),
+        EXISTS("Particular (existence) quantifier", "\\exists", "∃"),
+        BELONGS("Element belong to set", "\\in", "∈"),
+        NOT_BELONGS("Element does not belong to set", "\\notin", "∉"),
+        SUM("Sum", "\\sum", "∑"),
+        INFINITY("Infinity", "\\infty", "∞"),
+        AND("Logical AND", "\\land",  "∧"),
+        OR("Logical OR", "\\lor", "∨"),
+        INTERSECTION("Sets intersection", "\\cap", "∩"),
+        UNION("Sets union", "\\cup", "∪"),
+        EPSILON("Epsilon", "\\varepsilon", "ε"),
+        DELTA("Delta", "\\delta", "δ"),
+        LESS("Less", "<", "<"),
+        LESS_EQUAL("Less or equal", "\\leq",  "≤"),
+        GREATER_EQUAL("Greater or equal", "\\geq", "≥"),
+        EQUIVALENCE("Equivalence", "\\equiv",  "≡"),
+        RIGHT_ARROW("Right arrow", "\\Rightarrow", "⇒"),
+        LEFT_ARROW("Left arrow", "\\Leftarrow", "⇐"),
+        LEFT_RIGHT_ARROW("Left right arrow", "\\Leftrightarrow", "⇔"),
+        N("Set of Naturals", "\\mathbb{N}",  "ℕ"),
+        Z("Set of Integers", "\\mathbb{Z}",  "ℤ");
+
 
         /**
          * name - mathematical name of the symbol
          * <p>
          * alias - symbol notation for parsing
          * <p>
-         * html - HTML code of the symbol
-         * <p>
          * character - decoded HTML code
          */
-        private final String name, alias, html, character;
+        private final String name;
+        private final String alias;
+        private final String character;
 
-        Symbol(String name, String alias, String html, String character) {
+        Symbol(String name, String alias, String character) {
             this.name = name;
             this.alias = alias;
-            this.html = html;
             this.character = character;
         }
     }
@@ -53,7 +58,7 @@ public class Parser {
     // TODO: Optimize parsing process (for example, via Trie and Aho-Corasick)
     public static String parseString(String string) {
         for (Symbol symbol : Symbol.values()) {
-            string = string.replace(symbol.alias, symbol.html);
+            string = string.replace(symbol.alias, symbol.character);
         }
         return string;
     }
@@ -66,11 +71,11 @@ public class Parser {
     public static String getParsableSymbolsReference() {
         String reference = "";
         for (Symbol symbol : Symbol.values()) {
-            if (symbol == Symbol.LESS) { // For successfully parsed message
+            if (symbol == Symbol.LESS) { // To avoid parsing errors
                 continue;
             }
-            reference = reference.concat(String.format("%s (%s) is denoted by <u>%s</u>\n",
-                    symbol.name, symbol.html, symbol.alias));
+            reference = reference.concat(String.format("<i>%s</i> (%s) is denoted by <u>%s</u>\n",
+                    symbol.name, symbol.character, symbol.alias));
         }
         return reference;
     }
