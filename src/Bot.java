@@ -1,76 +1,55 @@
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.UpdatesListener;
+import com.pengrad.telegrambot.model.InlineQuery;
+import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.model.request.InlineQueryResultArticle;
+import com.pengrad.telegrambot.request.AnswerInlineQuery;
+import com.pengrad.telegrambot.request.BaseRequest;
 
-// TODO: Make this bot inline
+public class Bot {
+    private final TelegramBot bot = new TelegramBot(System.getenv("BOT_TOKEN"));
 
-/**
- * Bot description
- */
-public class Bot extends TelegramLongPollingBot {
-    String BOT_NAME, BOT_TOKEN;
-    MessageHandler messageHandler;
+    // TODO: Process inline queries and messages separately
 
     /**
-     * Bot constructor
+     * Method to process incoming updates
      *
-     * @param bot_name  Telegram bot username
-     * @param bot_token Telegram bot token
+     * @param update received update
      */
-    private Bot(String bot_name, String bot_token) {
-        BOT_NAME = bot_name;
-        BOT_TOKEN = bot_token;
-        messageHandler = new MessageHandler();
-    }
+    private void process(Update update) {
+        InlineQuery query = update.inlineQuery();
+        BaseRequest request = null;
+        if (query != null) {
+            String queryText = query.query();
+            String parsedText = Parser.parseString(queryText);
 
-    /**
-     * Method to authenticate bot (by name)
-     *
-     * @return bot name
-     */
-    @Override
-    public String getBotUsername() {
-        return BOT_NAME;
-    }
-
-    /**
-     * Method to authenticate bot (by token)
-     *
-     * @return bot token
-     */
-    @Override
-    public String getBotToken() {
-        return BOT_TOKEN;
-    }
-
-    /**
-     * Method to receive and process updates
-     * @param update occurred update
-     */
-    @Override
-    public void onUpdateReceived(Update update) {
-        if (update.hasMessage() && update.getMessage().hasText()) {
-            try {
-                execute(messageHandler.handleMessage(update.getMessage()));
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
-            }
+            InlineQueryResultArticle article = buildInlineButton("rendered", "Rendered: " + parsedText, parsedText);
+            request = new AnswerInlineQuery(query.id(), article).cacheTime(1);
+        }
+        if (request != null) {
+            bot.execute(request);
         }
     }
 
     /**
-     * Bot startup
+     * Method to create Article button for inline query
      *
-     * @param args args[0] - bot name, args[1] - bot token
+     * @param id    button ID
+     * @param title button visible title
+     * @param data  button text content
+     * @return query result article
      */
-    public static void main(String[] args) {
-        try {
-            TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-            telegramBotsApi.registerBot(new Bot(args[0], args[1]));
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
+    private InlineQueryResultArticle buildInlineButton(String id, String title, String data) {
+        return new InlineQueryResultArticle(id, title, data);
+    }
+
+    /**
+     * Method to start bot
+     */
+    public void serve() {
+        bot.setUpdatesListener(updates -> {
+            updates.forEach(this::process);
+            return UpdatesListener.CONFIRMED_UPDATES_ALL;
+        });
     }
 }
