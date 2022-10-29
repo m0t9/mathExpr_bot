@@ -1,8 +1,8 @@
 # ➕ Math Expression Bot
-is intended to parse your mathematical formulas in Telegram messages in a pretty style.
+is intended to parse your mathematical (LaTeX-like) formulas in Telegram messages in a pretty style.
 
 # ❓ How to use it?
-Just typo [@tomathbot](http://t.me/tomathbot "@tomathbot") in the beginning of the message and input your formula 😉
+Just type [@tomathbot](http://t.me/tomathbot "@tomathbot") in the beginning of the message and input your formula 😉
 
 ![How it works](https://user-images.githubusercontent.com/60100612/198391210-a7eb2ad1-b60b-44c7-b0d2-380adb427966.png)
 
