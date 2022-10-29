@@ -11,15 +11,32 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.BaseResponse;
 import org.jetbrains.annotations.NotNull;
 
-// TODO: Write readme.md
+// TODO: Refactor
 
+/**
+ * Bot class description
+ */
 public class Bot {
-    /** Constants for message type recognition */
-    private final String HELP = "/help";
+    /**
+     * Constants for message type recognition
+     */
+    private static final String GREET = "/start", HELP = "/help";
+
+    /**
+     * Constants for incoming messages answering
+     */
+    private static final String
+            GREETING_MESSAGE = """
+            Hi! I am inline bot that can help you to parse messages with LaTeX-like formulas in a pretty style! ✨
+                        
+            Use /help to get all parsable symbols list.
+            Type @tomathbot in the beginning of the message to involve me to parse the rest of the message.
+            """,
+            HELP_MESSAGE = String.format("<b>List of available symbols to parse</b>\n\n%s", Parser.getReference()),
+            DEFAULT_MESSAGE = "This bot supports only /help and /start commands.";
+
 
     private final TelegramBot bot = new TelegramBot(System.getenv("BOT_TOKEN"));
-
-    // TODO: Process inline queries and messages separately
 
     /**
      * Method to process incoming updates
@@ -44,21 +61,23 @@ public class Bot {
         String parsedText = Parser.parseString(queryText);
 
         InlineQueryResultArticle article = new InlineQueryResultArticle("rendered", parsedText, parsedText);
-        BaseRequest<AnswerInlineQuery, BaseResponse> request = new AnswerInlineQuery(query.id(), article).cacheTime(1);
+        BaseRequest<AnswerInlineQuery, BaseResponse> request = new AnswerInlineQuery(query.id(), article);
 
         bot.execute(request);
     }
 
     /**
      * Method to process given message
+     *
      * @param message given personal message
      */
     private void processMessage(@NotNull Message message) {
         String chatId = message.chat().id().toString(), text = message.text(), response;
 
         switch (text) {
-            case HELP -> response = "<b>List of available symbols to parse</b>\n\n" + Parser.getParsableSymbolsReference();
-            default -> response = "This bot supports only command /help and inline queries.";
+            case GREET -> response = GREETING_MESSAGE;
+            case HELP -> response = HELP_MESSAGE;
+            default -> response = DEFAULT_MESSAGE;
         }
 
         SendMessage sendMessage = new SendMessage(chatId, response);
@@ -67,7 +86,7 @@ public class Bot {
     }
 
     /**
-     * Method to start bot
+     * Method to start bot listening
      */
     public void serve() {
         bot.setUpdatesListener(updates -> {
