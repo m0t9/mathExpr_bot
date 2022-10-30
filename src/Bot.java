@@ -42,7 +42,7 @@ public class Bot {
         String parsedText = Parser.parseString(queryText);
 
         InlineQueryResultArticle article = new InlineQueryResultArticle("rendered", parsedText, parsedText);
-        BaseRequest<AnswerInlineQuery, BaseResponse> request = new AnswerInlineQuery(query.id(), article);
+        BaseRequest<AnswerInlineQuery, BaseResponse> request = new AnswerInlineQuery(query.id(), article).cacheTime(0);
 
         bot.execute(request);
     }
