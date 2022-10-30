@@ -17,25 +17,6 @@ import org.jetbrains.annotations.NotNull;
  * Bot class description
  */
 public class Bot {
-    /**
-     * Constants for message type recognition
-     */
-    private static final String GREET = "/start", HELP = "/help";
-
-    /**
-     * Constants for incoming messages answering
-     */
-    private static final String
-            GREETING_MESSAGE = """
-            Hi! I am inline bot that can help you to parse messages with LaTeX-like formulas in a pretty style! ✨
-                        
-            Use /help to get all parsable symbols list.
-            Type @tomathbot in the beginning of the message to involve me to parse the rest of the message.
-            """,
-            HELP_MESSAGE = String.format("<b>List of available symbols to parse</b>\n\n%s", Parser.getReference()),
-            DEFAULT_MESSAGE = "This bot supports only /help and /start commands.";
-
-
     private final TelegramBot bot = new TelegramBot(System.getenv("BOT_TOKEN"));
 
     /**
@@ -75,9 +56,9 @@ public class Bot {
         String chatId = message.chat().id().toString(), text = message.text(), response;
 
         switch (text) {
-            case GREET -> response = GREETING_MESSAGE;
-            case HELP -> response = HELP_MESSAGE;
-            default -> response = DEFAULT_MESSAGE;
+            case Text.GREET_QUERY -> response = Text.GREETING_MESSAGE;
+            case Text.HELP_QUERY -> response = Text.HELP_MESSAGE;
+            default -> response = Text.DEFAULT_MESSAGE;
         }
 
         SendMessage sendMessage = new SendMessage(chatId, response);
