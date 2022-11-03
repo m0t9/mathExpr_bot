@@ -14,4 +14,4 @@ Go to [releases](https://github.com/m0t9/mathExpr_bot/releases) and download `.j
 
 Put in environmental variable `BOT_TOKEN` token of your bot and run the script.
 
-JDK 19 was used during the development process.
+JDK 19 and [pengrad/java-telegram-bot-api](https://github.com/pengrad/java-telegram-bot-api) were used during the development process.
