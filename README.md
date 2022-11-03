@@ -8,7 +8,7 @@ Just type [@tomathbot](http://t.me/tomathbot "@tomathbot") in the beginning of t
 
 Use `/help` in bot's personal chat to get full list of supportable symbols.
 
-# 🧰 I want to run in by myself!
+# 🧰 I want to run it by myself!
 
 Go to [releases](https://github.com/m0t9/mathExpr_bot/releases) and download `.jar` executable file.
 
