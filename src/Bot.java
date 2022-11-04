@@ -40,7 +40,8 @@ public class Bot {
     String parsedText = Parser.parseString(queryText);
 
     InlineQueryResultArticle article =
-            new InlineQueryResultArticle("rendered", parsedText, parsedText);
+            new InlineQueryResultArticle("rendered", "Parsed text", parsedText)
+                    .description(parsedText).thumbUrl(Text.LOGO_LINK);
     BaseRequest<AnswerInlineQuery, BaseResponse> request =
             new AnswerInlineQuery(query.id(), article).cacheTime(0);
 

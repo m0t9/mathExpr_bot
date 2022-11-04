@@ -31,4 +31,10 @@ public class Text {
 
   public static final String
           REFERENCE_TEMPLATE = "%s (%s) is denoted by <i>%s</i>\n";
+
+  /**
+   * Constants for internal bot processes.
+   */
+  public static final String
+          LOGO_LINK = "https://i.imgur.com/kra2lHx.jpg";
 }
