@@ -8,10 +8,10 @@ Just type [@tomathbot](http://t.me/tomathbot "@tomathbot") in the beginning of t
 
 Use `/help` in bot's personal chat to get full list of supportable symbols.
 
-# 🧰 I want to run in by myself!
+# 🧰 I want to run it by myself!
 
 Go to [releases](https://github.com/m0t9/mathExpr_bot/releases) and download `.jar` executable file.
 
 Put in environmental variable `BOT_TOKEN` token of your bot and run the script.
 
-JDK 19 was used during the development process.
+JDK 19 and [pengrad/java-telegram-bot-api](https://github.com/pengrad/java-telegram-bot-api) were used during the development process.
