@@ -30,7 +30,7 @@ public class Parser {
    * @return string with all expanded superscripts and subscripts
    */
   private static String parseScript(String string) {
-    Pattern pattern = Pattern.compile("[\\^, _]\\{[()a-z0-9+-=]+}");
+    Pattern pattern = Pattern.compile("[\\^, _]\\{[()a-z0-9+-=]*}");
     Matcher matcher = pattern.matcher(string);
 
     string = matcher.replaceAll((match) -> expandScript(match.group()));
