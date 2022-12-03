@@ -14,7 +14,7 @@ public class Text {
   public static final String
           GREETING_MESSAGE = String.format("""
           Hi! I am inline bot that can help you to parse messages\040
-          with LaTeX-like formulas in a pretty style! ✨
+          with LᴬTᴇX-like formulas in a pretty style! ✨
                       
           Use %s to get all parsable symbols list.
           Type @tomathbot in the beginning of the message\040
@@ -24,7 +24,8 @@ public class Text {
           HELP_MESSAGE =
           String.format("<b>List of available symbols to parse</b>\n\n%s",
                   Parser.getReference())
-                  + "\n<b>Subscript and superscript for numbers are supported.</b>";
+                  + "\n<b>Subscript and superscript for numbers, operation, "
+                  + "and several letters are supported.</b>";
   public static final String
           DEFAULT_MESSAGE =
           String.format("This bot supports only %s and %s commands.", GREET_QUERY, HELP_QUERY);

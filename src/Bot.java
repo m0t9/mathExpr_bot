@@ -6,9 +6,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.InlineQueryResultArticle;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.AnswerInlineQuery;
-import com.pengrad.telegrambot.request.BaseRequest;
 import com.pengrad.telegrambot.request.SendMessage;
-import com.pengrad.telegrambot.response.BaseResponse;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -39,11 +37,9 @@ public class Bot {
     String queryText = query.query();
     String parsedText = Parser.parseString(queryText);
 
-    InlineQueryResultArticle article =
-            new InlineQueryResultArticle("rendered", "Parsed text", parsedText)
+    var article = new InlineQueryResultArticle("rendered", "Parsed text", parsedText)
                     .description(parsedText).thumbUrl(Text.LOGO_LINK);
-    BaseRequest<AnswerInlineQuery, BaseResponse> request =
-            new AnswerInlineQuery(query.id(), article).cacheTime(0);
+    var request = new AnswerInlineQuery(query.id(), article).cacheTime(0);
 
     bot.execute(request);
   }
@@ -64,7 +60,7 @@ public class Bot {
       default -> response = Text.DEFAULT_MESSAGE;
     }
 
-    SendMessage sendMessage = new SendMessage(chatId, response);
+    var sendMessage = new SendMessage(chatId, response);
     sendMessage.parseMode(ParseMode.HTML);
     bot.execute(sendMessage);
   }
