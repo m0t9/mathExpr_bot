@@ -6,7 +6,7 @@ Just type [@tomathbot](http://t.me/tomathbot "@tomathbot") in the beginning of t
 
 ![How it works](https://user-images.githubusercontent.com/60100612/199959469-bbca0f7c-0912-4865-ad15-6f413f673567.png)
 
-Use `/help` in bot's personal chat to get full list of supportable symbols and features.
+Use `/help` in personal chat with bot to get full list of supportable symbols and features.
 
 # ⚙️ How do I run it myself?
 Go to [releases](https://github.com/m0t9/mathExpr_bot/releases) and download `.jar` executable file.

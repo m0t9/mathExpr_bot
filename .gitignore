@@ -1,6 +1,4 @@
-# Project exclude paths
-/target/
-/.idea
-MathExprBot.iml
-META-INF
-out
+/.idea/
+/settings.gradle
+/build/
+/.gradle/

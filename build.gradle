@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+}
+
+group 'MathExprBot'
+
+jar {
+    archiveBaseName = 'tomathbot'
+    version = '0.6.0'
+    manifest {
+        attributes 'Main-Class': 'tomathbot.Main'
+    }
+}
+
+configurations {
+    extraLibs
+}
+
+dependencies {
+    extraLibs 'com.github.pengrad:java-telegram-bot-api:6.7.0'
+    configurations.implementation.extendsFrom(configurations.extraLibs)
+}
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.WARN
+
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
