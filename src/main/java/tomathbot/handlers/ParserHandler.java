@@ -9,6 +9,9 @@ import org.m0t9_.stategram.handlers.BotResponse;
 import tomathbot.Text;
 import tomathbot.parsing.Parser;
 
+/**
+ * Process inline query, parse it.
+ */
 @OnInlineQuery
 public class ParserHandler extends org.m0t9_.stategram.handlers.Handler {
     @Override

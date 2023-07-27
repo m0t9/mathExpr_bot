@@ -8,6 +8,9 @@ import org.m0t9_.stategram.handlers.BotResponse;
 import org.m0t9_.stategram.tools.UpdateTools;
 import tomathbot.Text;
 
+/**
+ * User greeting, triggerred by '/start'.
+ */
 @OnMessage(pattern = Text.GREET_QUERY)
 public class GreetingHandler extends org.m0t9_.stategram.handlers.Handler {
     @Override

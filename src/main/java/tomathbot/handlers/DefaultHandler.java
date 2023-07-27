@@ -8,6 +8,9 @@ import org.m0t9_.stategram.handlers.BotResponse;
 import org.m0t9_.stategram.tools.UpdateTools;
 import tomathbot.Text;
 
+/**
+ * Handle incoming messages except '/help' and '/start'.
+ */
 @OnMessage
 public class DefaultHandler extends org.m0t9_.stategram.handlers.Handler {
     @Override

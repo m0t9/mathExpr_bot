@@ -9,6 +9,9 @@ import org.m0t9_.stategram.handlers.BotResponse;
 import org.m0t9_.stategram.tools.UpdateTools;
 import tomathbot.Text;
 
+/**
+ * Send message with reference. Triggers by '/help'.
+ */
 @OnMessage(pattern = Text.HELP_QUERY)
 public class HelpHandler extends org.m0t9_.stategram.handlers.Handler {
     @Override
